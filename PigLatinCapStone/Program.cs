@@ -17,7 +17,7 @@ namespace PigLatinCapStone
         public static string[] spitter(string[] ar)
         {
             char[] vowels = { 'a', 'e', 'i', 'o', 'u' };
-            
+
             for (int i = 0; i < ar.Length; i++)
             {
                 if (Regex.IsMatch(ar[i], @"^.*[@0-9<>/()*&^%$#@!].*$"))
@@ -34,7 +34,6 @@ namespace PigLatinCapStone
                         ar[i] = Worker(ar[i].Substring(0, ar[i].Length), "", "way", "");
                     else
                         ar[i] = Worker(ar[i].Substring(1, ar[i].Length - 1), ar[i][0].ToString(), "ay", "");
-
             }
             return ar;
         }
