@@ -9,17 +9,18 @@ namespace PigLatinCapStone
 {
     class Program
     {
-        public static string Worker(string substring,string firstLetter, string ending, string punc)
+        public static string Worker(string substring,string firstPart, string ending, string punc)
         {
-            return substring + firstLetter + ending + punc;
+            return substring + firstPart + ending + punc;
         }
 
         public static string[] spitter(string[] ar)
         {
             char[] vowels = { 'a', 'e', 'i', 'o', 'u','A','E','I','O','U' };
-
+            int j;
             for (int i = 0; i < ar.Length; i++)
             {
+                j = 0;
                 if (Regex.IsMatch(ar[i], @"^.*[@0-9<>/()*&^%$#@!].*$"))
                     continue;
                 if (char.IsPunctuation(ar[i][ar[i].Length - 1]))
@@ -27,13 +28,29 @@ namespace PigLatinCapStone
                     if (vowels.Contains(ar[i][0]))
                         ar[i] = Worker(ar[i].Substring(0, ar[i].Length - 1), "", "way", ar[i][ar[i].Length - 1].ToString());
                     else
-                        ar[i] = Worker(ar[i].Substring(1, ar[i].Length - 2), ar[i][0].ToString(), "ay", ar[i][ar[i].Length - 1].ToString());
+                    {
+                        for (j = 0; j < ar[i].Length; j++)
+                        {
+                            if (vowels.Contains(ar[i][j]))
+                                break;
+                        }
+                        ar[i] = Worker(ar[i].Substring(j, ar[i].Length - j-1), ar[i].Substring(0,j), "ay", ar[i][ar[i].Length - 1].ToString());
+                    }
                 }
                 else
                     if (vowels.Contains(ar[i][0]))
+                    {
                         ar[i] = Worker(ar[i].Substring(0, ar[i].Length), "", "way", "");
+                    }
                     else
-                        ar[i] = Worker(ar[i].Substring(1, ar[i].Length - 1), ar[i][0].ToString(), "ay", "");
+                    {
+                        for (j = 0; j < ar[i].Length; j++)
+                        {
+                            if (vowels.Contains(ar[i][j]))
+                                break;
+                        }
+                    ar[i] = Worker(ar[i].Substring(j, ar[i].Length - j), ar[i].Substring(0,j), "ay", "");
+                }
             }
             return ar;
         }
