@@ -16,7 +16,7 @@ namespace PigLatinCapStone
 
         public static string[] spitter(string[] ar)
         {
-            char[] vowels = { 'a', 'e', 'i', 'o', 'u' };
+            char[] vowels = { 'a', 'e', 'i', 'o', 'u','A','E','I','O','U' };
 
             for (int i = 0; i < ar.Length; i++)
             {
