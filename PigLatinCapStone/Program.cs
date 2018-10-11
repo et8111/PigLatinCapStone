@@ -29,28 +29,18 @@ namespace PigLatinCapStone
                         ar[i] = Worker(ar[i].Substring(0, ar[i].Length - 1), "", "way", ar[i][ar[i].Length - 1].ToString());
                     else
                     {
-                        for (j = 0; j < ar[i].Length; j++)
-                        {
-                            if (vowels.Contains(ar[i][j]))
-                                break;
-                        }
+                        j = ar[i].IndexOf(ar[i].First(a => vowels.Contains(a)));
                         ar[i] = Worker(ar[i].Substring(j, ar[i].Length - j-1), ar[i].Substring(0,j), "ay", ar[i][ar[i].Length - 1].ToString());
                     }
                 }
                 else
                     if (vowels.Contains(ar[i][0]))
-                    {
                         ar[i] = Worker(ar[i].Substring(0, ar[i].Length), "", "way", "");
-                    }
                     else
                     {
-                        for (j = 0; j < ar[i].Length; j++)
-                        {
-                            if (vowels.Contains(ar[i][j]))
-                                break;
-                        }
-                    ar[i] = Worker(ar[i].Substring(j, ar[i].Length - j), ar[i].Substring(0,j), "ay", "");
-                }
+                        j = ar[i].IndexOf(ar[i].First(a => vowels.Contains(a)));
+                        ar[i] = Worker(ar[i].Substring(j, ar[i].Length - j), ar[i].Substring(0,j), "ay", "");
+                    }
             }
             return ar;
         }
@@ -72,7 +62,7 @@ namespace PigLatinCapStone
                 }
                 Console.WriteLine(string.Join(" ", ar));
                 Ask:
-                Console.Write("\nAgain (y/n)?: ");
+                Console.Write("\nAgain (y/n)?: ");  
                 choice = Console.ReadLine();
                 if (choice == "Y" || choice == "y")
                     continue;
