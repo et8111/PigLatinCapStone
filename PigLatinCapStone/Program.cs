@@ -40,11 +40,13 @@ namespace PigLatinCapStone
 
         static void Main(string[] args)
         {
+            string str = "", choice = "";
+            string[] ar;
             while (true)
             {
                 Console.WriteLine("ENTER A STRING: ");
-                string str = Console.ReadLine();
-                string[] ar = str.Split(' ');
+                str = Console.ReadLine();
+                ar = str.Split(' ');
                 spitter(ar);
                 for (int i = 0; i < ar.Length; i++)
                 {
@@ -52,9 +54,15 @@ namespace PigLatinCapStone
                         ar[i] = char.ToUpper(ar[i][0]) + ar[i].Substring(1, ar[i].Length - 1).ToLower();
                 }
                 Console.WriteLine(string.Join(" ", ar));
-                Console.Write("\nPress 'y' to enter another line: ");
-                if (Console.ReadLine() != "y")
+                Ask:
+                Console.Write("\nAgain (y/n)?: ");
+                choice = Console.ReadLine();
+                if (choice == "Y" || choice == "y")
+                    continue;
+                else if (choice == "n" || choice == "N")
                     break;
+                else
+                    goto Ask;
             }
         }
     }
