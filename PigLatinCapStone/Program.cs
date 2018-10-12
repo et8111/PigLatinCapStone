@@ -9,6 +9,61 @@ namespace PigLatinCapStone
 {
     class Program
     {
+        public static string puncuationChecker(string str)
+        {
+            string temp = "";
+            if (Regex.Match(str, "[.,!?]").Success)
+            {
+                temp = str[str.Length-1].ToString();
+                return VowelSeparator(str.Substring(0, str.Length - 1),temp);
+            }
+            return VowelSeparator(str, temp);
+        }
+
+        public static string VowelSeparator(string str, string p)
+        {
+            int j = Regex.Match(str, "[aeiouAEIOU]").Index;
+            string temp = (j == 0)?"way":"ay";
+            return CapitalLetter(str.Substring(j, str.Length-j) +str.Substring(0,j)+ temp+ p);
+        }
+
+        public static string CapitalLetter(string str)
+        {
+            if (Regex.IsMatch(str, @"^.*[A-Z].*$"))
+                str = char.ToUpper(str[0]) + str.Substring(1, str.Length - 1).ToLower();
+            return str;
+        }
+
+        static void Main(string[] args)
+        {
+            string choice = "";
+            string[] word;
+            while (true)
+            {
+                Console.WriteLine("ENTER A STRING: ");
+                word = Console.ReadLine().Split(' ');
+                for (int i = 0; i < word.Length; i++) //puncuationChecker->vowelSeperator->CapitalLetter: back here
+                    word[i] = puncuationChecker(word[i]);
+                Console.WriteLine(string.Join(" ", word));
+            Ask:
+                Console.Write("\nAgain (y/n)?: ");
+                choice = Console.ReadLine();
+                if (choice == "Y" || choice == "y")
+                    continue;
+                else if (choice == "n" || choice == "N")
+                    break;
+                else
+                    goto Ask;
+            }
+        }
+    }
+}
+
+/*Original solution. Way messier then new one.
+ * 
+
+    
+
         public static string[] spitter(string[] ar)
         {
             char[] vowels = { 'a', 'e', 'i', 'o', 'u','A','E','I','O','U' };
@@ -43,32 +98,4 @@ namespace PigLatinCapStone
             }
             return final;
         }
-
-        static void Main(string[] args)
-        {
-            string choice = "";
-            string[] ar, final;
-            while (true)
-            {
-                Console.WriteLine("ENTER A STRING: ");
-                ar = Console.ReadLine().Split(' ');
-                final = spitter(ar);
-                for (int i = 0; i < final.Length; i++)
-                {
-                    if (Regex.IsMatch(final[i], @"^.*[A-Z].*$"))
-                        final[i] = char.ToUpper(final[i][0]) + final[i].Substring(1, final[i].Length - 1).ToLower();
-                }
-                Console.WriteLine(string.Join(" ", final));
-            Ask:
-                Console.Write("\nAgain (y/n)?: ");
-                choice = Console.ReadLine();
-                if (choice == "Y" || choice == "y")
-                    continue;
-                else if (choice == "n" || choice == "N")
-                    break;
-                else
-                    goto Ask;
-            }
-        }
-    }
-}
+ */
