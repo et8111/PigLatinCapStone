@@ -9,60 +9,58 @@ namespace PigLatinCapStone
 {
     class Program
     {
-        public static string Worker(string substring,string firstPart, string ending, string punc)
-        {
-            return substring + firstPart + ending + punc;
-        }
-
         public static string[] spitter(string[] ar)
         {
             char[] vowels = { 'a', 'e', 'i', 'o', 'u','A','E','I','O','U' };
             int j;
+            string[] final = new string[ar.Length];
             for (int i = 0; i < ar.Length; i++)
             {
                 j = 0;
-                if (Regex.IsMatch(ar[i], @"^.*[@0-9<>/()*&^%$#@!].*$"))
+                if (Regex.IsMatch(ar[i], @"^.*[@0-9<>/()*&^%$#@.!;,.].*$"))
+                {
+                    final[i] = ar[i];
                     continue;
+                }
                 if (char.IsPunctuation(ar[i][ar[i].Length - 1]))
                 {
                     if (vowels.Contains(ar[i][0]))
-                        ar[i] = Worker(ar[i].Substring(0, ar[i].Length - 1), "", "way", ar[i][ar[i].Length - 1].ToString());
+                        final[i] = ar[i].Substring(0, ar[i].Length - 1)+ ""+ "way"+ ar[i][ar[i].Length - 1].ToString();
                     else
                     {
                         j = ar[i].IndexOf(ar[i].First(a => vowels.Contains(a)));
-                        ar[i] = Worker(ar[i].Substring(j, ar[i].Length - j-1), ar[i].Substring(0,j), "ay", ar[i][ar[i].Length - 1].ToString());
+                        final[i] = ar[i].Substring(j, ar[i].Length - j-1)+ ar[i].Substring(0,j)+ "ay"+ ar[i][ar[i].Length - 1].ToString();
                     }
                 }
                 else
                     if (vowels.Contains(ar[i][0]))
-                        ar[i] = Worker(ar[i].Substring(0, ar[i].Length), "", "way", "");
+                        final[i] = ar[i].Substring(0, ar[i].Length)+ ""+ "way"+ "";
                     else
                     {
                         j = ar[i].IndexOf(ar[i].First(a => vowels.Contains(a)));
-                        ar[i] = Worker(ar[i].Substring(j, ar[i].Length - j), ar[i].Substring(0,j), "ay", "");
+                        final[i] = ar[i].Substring(j, ar[i].Length - j)+ ar[i].Substring(0,j)+ "ay"+"";
                     }
             }
-            return ar;
+            return final;
         }
 
         static void Main(string[] args)
         {
             string str = "", choice = "";
-            string[] ar;
+            string[] ar, final;
             while (true)
             {
                 Console.WriteLine("ENTER A STRING: ");
-                str = Console.ReadLine();
-                ar = str.Split(' ');
-                spitter(ar);
-                for (int i = 0; i < ar.Length; i++)
+                ar = Console.ReadLine().Split(' ');
+                final = spitter(ar);
+                for (int i = 0; i < final.Length; i++)
                 {
-                    if (Regex.IsMatch(ar[i], @"^.*[A-Z].*$"))
-                        ar[i] = char.ToUpper(ar[i][0]) + ar[i].Substring(1, ar[i].Length - 1).ToLower();
+                    if (Regex.IsMatch(final[i], @"^.*[A-Z].*$"))
+                        final[i] = char.ToUpper(final[i][0]) + final[i].Substring(1, final[i].Length - 1).ToLower();
                 }
-                Console.WriteLine(string.Join(" ", ar));
-                Ask:
-                Console.Write("\nAgain (y/n)?: ");  
+                Console.WriteLine(string.Join(" ", final));
+            Ask:
+                Console.Write("\nAgain (y/n)?: ");
                 choice = Console.ReadLine();
                 if (choice == "Y" || choice == "y")
                     continue;
