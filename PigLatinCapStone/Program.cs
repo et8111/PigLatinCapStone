@@ -16,7 +16,7 @@ namespace PigLatinCapStone
             string temp = "";
             if (Regex.Match(str, "[.,!?]").Success)
             {
-                temp = str[str.Length-1].ToString();
+                temp = str.Last().ToString();
                 return VowelSeparator(str.Substring(0, str.Length - 1),temp);
             }
             return VowelSeparator(str, temp);
