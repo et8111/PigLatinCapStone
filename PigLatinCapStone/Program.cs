@@ -15,7 +15,7 @@ namespace PigLatinCapStone
             int j;
             string[] final = new string[ar.Length];
             for (int i = 0; i < ar.Length; i++)
-            {
+            {//ALL 'final[i]=' formats are->(subarray: firstVowel-EndOrPuncuation, ConsenantsArray, Ending(WayOrAy), Puncuation(IfAny))
                 j = 0;
                 if (Regex.IsMatch(ar[i], @"^.*[@0-9<>/()*&^%$#@.!;,.].*$"))
                 {
@@ -46,7 +46,7 @@ namespace PigLatinCapStone
 
         static void Main(string[] args)
         {
-            string str = "", choice = "";
+            string choice = "";
             string[] ar, final;
             while (true)
             {
