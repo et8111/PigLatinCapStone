@@ -11,10 +11,10 @@ namespace PigLatinCapStone
     {
         public static string puncuationChecker(string str)
         {//if theres puncuation send it to VOwelSeparator, if not send an empty string
-            if (Regex.Match(str, "[0-9@#$%^&*()<>]").Success)
+            if (Regex.Match(str, "[0-9@#$%&*()<>.,+=:;!?].").Success)
                 return str;
             string temp = "";
-            if (Regex.Match(str, "[.,!?]").Success)
+            if (Regex.Match(str, @"[.,!?]").Success)
             {
                 temp = str.Last().ToString();
                 return VowelSeparator(str.Substring(0, str.Length - 1),temp);
@@ -45,8 +45,8 @@ namespace PigLatinCapStone
                 Console.WriteLine("ENTER A STRING: ");
                 word = Console.ReadLine().Split(' ');
                 final = new string[word.Length];
-                for (int i = 0; i < word.Length; i++) //puncuationChecker->vowelSeperator->CapitalLetter: back here
-                    final[i] = puncuationChecker(word[i]);
+                for (int i = 0; i < word.Length; i++)
+                    final[i] = puncuationChecker(word[i]); //puncuationChecker->vowelSeperator->CapitalLetter: back here
                 Console.WriteLine(string.Join(" ", final));
             Ask:
                 Console.Write("\nAgain (y/n)?: ");
