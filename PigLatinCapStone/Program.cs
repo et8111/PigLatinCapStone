@@ -11,7 +11,7 @@ namespace PigLatinCapStone
     {
         public static string puncuationChecker(string str)
         {//if theres puncuation send it to VOwelSeparator, if not send an empty string
-            if (Regex.Match(str, "[0-9@#$%&*()<>,+=:;].*").Success)
+            if (Regex.Match(str, "[0-9@#$%&*()<>,+=:;].").Success)
                 return str;
             string temp = "";
             if (Regex.Match(str, @"[.,!?]").Success)
